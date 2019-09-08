@@ -1,8 +1,7 @@
-﻿using Albo.SpotifyRecommendations.Api.Models;
-using Microsoft.AspNetCore.Mvc;
-using CodingAssignment.Spotify.ApiClient.Repository;
+﻿using CodingAssignment.Spotify.ApiClient.Repository;
 using System.Threading.Tasks;
 using CodingAssignment.Spotify.ApiClient.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Albo.SpotifyRecommendations.Api.Controllers
 {
@@ -19,8 +18,15 @@ namespace Albo.SpotifyRecommendations.Api.Controllers
         [HttpGet("{name}")]
         public ActionResult<Task<SearchArtistResponse>> Get(string name)
         {
+           var response = _repo.SearchArtist(name); 
 
-            return _repo.SearchArtist(name); 
+           // No artist found
+           if(response.Result.Artists.Items != null && response.Result.Artists.Items.Count == 0)
+            {
+                return NoContent();
+            }
+
+            return Ok(response); 
         }
     }
 }

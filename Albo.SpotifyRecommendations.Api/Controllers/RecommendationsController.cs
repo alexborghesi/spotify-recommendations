@@ -18,7 +18,14 @@ namespace Albo.SpotifyRecommendations.Api.Controllers
         [HttpGet()]
         public ActionResult<Task<Recommendation>> Get([FromQuery] string[] ids)
         {
-            return _repo.GetRecommendation(ids); 
+            var response = _repo.GetRecommendation(ids);
+            
+            // No recommendation found
+            if (response.Result.Tracks != null && response.Result.Tracks.Length == 0)
+            {
+                return NoContent();
+            }
+            return Ok(response); 
         }
     }
 }
