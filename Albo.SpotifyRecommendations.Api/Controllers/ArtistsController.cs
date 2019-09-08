@@ -20,7 +20,7 @@ namespace Albo.SpotifyRecommendations.Api.Controllers
         public ActionResult<Task<SearchArtistResponse>> Get(string name)
         {
 
-            return _repo.SearchArtist(name, 3, null); 
+            return _repo.SearchArtist(name); 
         }
     }
 }

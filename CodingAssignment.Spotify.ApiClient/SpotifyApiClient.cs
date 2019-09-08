@@ -31,7 +31,7 @@ namespace CodingAssignment.Spotify.ApiClient
             return client;
         }
 
-        public async Task<SearchArtistResponse> SearchArtist(string artistName, int? limit = null, int? offset = null)
+        public async Task<SearchArtistResponse> SearchArtist(string artistName)
         {
             var client = GetDefaultClient();
 
@@ -39,13 +39,9 @@ namespace CodingAssignment.Spotify.ApiClient
                         .SetQueryParam("q", artistName)
                         .SetQueryParam("type", "artist");
 
-            if (limit != null)
-                url = url.SetQueryParam("limit", limit);
-
-            if (offset != null)
-                url = url.SetQueryParam("offset", offset);
-
-            var response = await client.GetStringAsync(url);
+           // Maximum 3 artists in response
+           url = url.SetQueryParam("limit", 3);
+           var response = await client.GetStringAsync(url);
 
             return JsonConvert.DeserializeObject<SearchArtistResponse>(response);
         }
