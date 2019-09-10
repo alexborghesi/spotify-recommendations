@@ -11,9 +11,9 @@ export class AppService {
     constructor(private http: HttpClient) { }
 
     searchArtist(name: string): Observable<SearchArtistResponse> {
-        return this.http.get<any>(`https://localhost:5001/api/artists/${name}`).pipe(map(res => res.result));
+        return this.http.get<any>(`https://localhost:5001/api/artists/${name}`);
     } 
     getRecommendation(artistIds: string[]): Observable<Recommendation> {
-        return this.http.get<any>(`https://localhost:5001/api/recommendations/?ids=${artistIds}`).pipe(map(res => res.result));
+        return this.http.get<any>(`https://localhost:5001/api/recommendations/?ids=${artistIds}`);
     }   
 }
